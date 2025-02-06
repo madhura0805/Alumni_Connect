@@ -10,6 +10,8 @@ body {
     align-items: center;
     background-color: #0A59A3;
     padding: 20px 20px;
+    z-index: 0;
+    position: sticky;
   }
   
   .logo a {
@@ -22,6 +24,7 @@ body {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    list-style: none;
   }
   
   .nav-links a {

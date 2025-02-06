@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Navbar.css';
+import { NavLink } from 'react-router-dom';
 
 function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -8,22 +9,43 @@ function Navbar() {
     <div>
       <nav className="navbar">
         <div className="logo">
-          <a href="/">Logo</a> {/* Replace with logo */}
+          <NavLink to="/">Logo</NavLink> {/* Replace with logo */}
         </div>
         <div className="nav-links">
-          <a href="/home">HOME</a>
-          <a href="/connect">CONNECT</a>
-          <a href="/community">COMMUNITY</a>
-          <a href="/blogs">BLOGS</a>
+          <li>
+            <NavLink to="/" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+              HOME
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/connect" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+              CONNECT
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/community" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+              COMMUNITY
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/blogs" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+              BLOGS
+            </NavLink>
+          </li>
+
           <div className="dropdown">
             <button onClick={() => setDropdownOpen(!dropdownOpen)}>
               LOGIN/SIGN UP
-              <span className="triangle"></span> 
+              <span className="triangle"></span>
             </button>
             {dropdownOpen && (
               <div className="dropdown-content">
-                <a href="/login/student">Student</a>
-                <a href="/login/alumni">Alumni</a>
+                <NavLink to="/login/student" onClick={() => setDropdownOpen(false)}>
+                  Student
+                </NavLink>
+                <NavLink to="/login/alumni" onClick={() => setDropdownOpen(false)}>
+                  Alumni
+                </NavLink>
               </div>
             )}
           </div>
