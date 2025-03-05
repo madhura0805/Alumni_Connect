@@ -1,0 +1,134 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+
+body {
+  background-color: #e5e7eb; 
+}
+
+.container {
+  width: 90%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3rem;
+}
+
+.hero-section h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1e3a8a; 
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+  margin-bottom: 1rem;
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+  color: #374151;
+  margin-bottom: 1.5rem;
+}
+
+
+.join-button {
+  background-color: #3b82f6;
+  color: white;
+  font-size: 1rem;
+  padding: 1rem 2.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.join-button:hover {
+  background-color: #2563eb;
+}
+
+
+.hero-image {
+  width: 40%;
+}
+
+
+.search-section {
+  margin-top: 2rem;
+  padding: 2rem;
+  background-color: #bfdbfe;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.search-section p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+}
+
+
+.search-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-input {
+  width: 60%;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: white;
+  color: black;
+}
+
+.search-button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #1d4ed8;
+}
+
+@media (max-width: 1200px) {
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-image {
+    width: 60%;
+    margin-top: 2rem;
+  }
+
+  .search-box {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .search-input {
+    width: 80%;
+  }
+}
