@@ -9,5 +9,4 @@ const AlumniCard = ({ name, role, img }) => {
     </div>
   );
 };
-
 export default AlumniCard;

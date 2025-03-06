@@ -1,9 +1,12 @@
 import './App.css';
 import Home from './components/Page/Home';
-import Connect from './components/Page/Connect';
+import Connect from './components/Connect/Connect';
 import Community from './components/Page/Community';
 import Blogs from './components/Page/Blogs';
 import Navbar from './components/Navbar/Navbar'; 
+import Chat from './components/Chat/chat'
+import SignUp from './components/SignUp/SignUp';
+import Login from './components/LogIn/LogIn';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -13,6 +16,23 @@ const router = createBrowserRouter([
       <div>
         <Navbar />
         <Home />
+      </div>
+    ),
+  },
+  {
+    path:"signup",
+    element:(
+      <div>
+        <SignUp></SignUp>
+      </div>
+    ),
+  },
+ 
+  {
+    path:"/login",
+    element:(
+      <div>
+        <Login></Login>
       </div>
     ),
   },

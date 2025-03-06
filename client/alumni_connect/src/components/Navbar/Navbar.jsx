@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Navbar.css';
 import { NavLink } from 'react-router-dom';
 
 function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [role, setRole] = useState(null);
+
+  // Check user role on component mount
+  useEffect(() => {
+    const userRole = localStorage.getItem("role");
+    setRole(userRole);
+  }, []);
 
   return (
     <div>
@@ -17,21 +24,54 @@ function Navbar() {
               HOME
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/connect" className={({ isActive }) => (isActive ? 'active-link' : '')}>
-              CONNECT
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/community" className={({ isActive }) => (isActive ? 'active-link' : '')}>
-              COMMUNITY
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/blogs" className={({ isActive }) => (isActive ? 'active-link' : '')}>
-              BLOGS
-            </NavLink>
-          </li>
+
+          {/* Show different links based on role */}
+          {role === "student" ? (
+            <>
+              <li>
+                <NavLink to="/connect-community" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+                  STUDENT COMMUNITY
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/blogs" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+                  STUDENT BLOGS
+                </NavLink>
+              </li>
+            </>
+          ) : role === "alumni" ? (
+            <>
+              <li>
+                <NavLink to="/connect-community" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+                  ALUMNI COMMUNITY
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/blogs" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+                  ALUMNI BLOGS
+                </NavLink>
+              </li>
+            </>
+          ) : (
+            // If no role found, show general links
+            <>
+              <li>
+                <NavLink to="/connect" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+                  CONNECT
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/community" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+                  COMMUNITY
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/blogs" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+                  BLOGS
+                </NavLink>
+              </li>
+            </>
+          )}
 
           <div className="dropdown">
             <button onClick={() => setDropdownOpen(!dropdownOpen)}>
