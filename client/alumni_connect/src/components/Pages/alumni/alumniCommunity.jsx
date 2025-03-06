@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Connect = () => {
+const alumniCommunity = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const Connect = () => {
   )
 }
 
-export default Connect
+export default alumniCommunity

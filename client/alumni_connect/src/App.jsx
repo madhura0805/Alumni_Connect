@@ -1,58 +1,18 @@
-import './App.css';
-import Home from './components/Page/Home';
-import Connect from './components/Page/Connect';
-import Community from './components/Page/Community';
-import Blogs from './components/Page/Blogs';
-import Navbar from './components/Navbar/Navbar'; 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <div>
-        <Navbar />
-        <Home />
-      </div>
-    ),
-  },
-  {
-    path: "/connect",
-    element: (
-      <div>
-        <Navbar />
-        <Connect />
-      </div>
-    ),
-  },
-  {
-    path: "/community",
-    element: (
-      <div>
-        <Navbar />
-        <Community />
-      </div>
-    ),
-  },
-  {
-    path: "/blogs",
-    element: (
-      <div>
-        <Navbar />
-        <Blogs />
-      </div>
-    ),
-  },
-  {
-    path: "*",
-    element: <div>404 - Page Not Found</div>,
-  }
-]);
+import React, { useContext } from "react";
+import { AuthContext } from "./AuthContext";
+import studentDashboard from '../src/components/Pages/student/studentDashboard';
+import alumniDashboard from '../src/components/Pages/alumni/alumniDashboard';
 
 function App() {
+  const { user } = useContext(AuthContext); 
+  
+  if (!user) {
+    return <LoginPage />;
+  }
+
   return (
     <div>
-      <RouterProvider router={router} />
+      {user.role === "student" ? <studentDashboard /> : <alumniDashboard/>}
     </div>
   );
 }
