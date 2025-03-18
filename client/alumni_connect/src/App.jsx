@@ -7,6 +7,7 @@ import Navbar from './components/Navbar/Navbar';
 import Chat from './components/Chat/chat'
 import SignUp from './components/SignUp/SignUp';
 import Login from './components/LogIn/LogIn';
+import AlumniDetails from './components/Connect/AlumniDetails.jsx';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -46,6 +47,15 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/alumni/:id",
+    element: (
+      <div>
+        <Navbar />
+        <AlumniDetails />
+      </div>
+    ),
+  },  
+  {
     path: "/community",
     element: (
       <div>
@@ -63,6 +73,7 @@ const router = createBrowserRouter([
       </div>
     ),
   },
+
   {
     path: "*",
     element: <div>404 - Page Not Found</div>,

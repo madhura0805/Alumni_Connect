@@ -80,11 +80,11 @@ function Navbar() {
             </button>
             {dropdownOpen && (
               <div className="dropdown-content">
-                <NavLink to="/login/student" onClick={() => setDropdownOpen(false)}>
-                  Student
+                <NavLink to="/login" onClick={() => setDropdownOpen(false)}>
+                  LOGIN
                 </NavLink>
-                <NavLink to="/login/alumni" onClick={() => setDropdownOpen(false)}>
-                  Alumni
+                <NavLink to="/signup" onClick={() => setDropdownOpen(false)}>
+                  SIGNUP
                 </NavLink>
               </div>
             )}

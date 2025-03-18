@@ -1,0 +1,18 @@
+.alumni-detail {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .alumni-img-large {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+  }
+  
+  .linkedin-link {
+    color: #0077b5;
+    font-weight: bold;
+  }
+  
