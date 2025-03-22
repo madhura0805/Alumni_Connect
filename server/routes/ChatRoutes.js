@@ -1,12 +1,9 @@
-// import express from "express";
-// import { sendMessage, getMessages } from "../controllers/messageController.js"; 
+import express from "express";
+import { getCommunityMessages, addMessage } from "../controllers/messageController.js";
 
-// const router = express.Router();
+const router = express.Router();
 
-// // Send a message
-// router.post("/", sendMessage);
+router.get("/:community", getCommunityMessages);
+router.post("/", addMessage);
 
-// // Get chat history
-// router.get("/:senderId/:receiverId", getMessages);
-
-// module.exports = router;
+export default router;

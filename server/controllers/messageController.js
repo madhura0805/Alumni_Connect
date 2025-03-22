@@ -1,35 +1,25 @@
-// import Message from "../models/message.js";
+import Message from "../models/Message.js";
 
-// // Send a message
-// const sendMessage = async (req, res) => {
-//   try {
-//     const { senderId, receiverId, message } = req.body;
+// Get messages for a specific community
+export const getCommunityMessages = async (req, res) => {
+  try {
+    const { community } = req.params;
+    const messages = await Message.find({ community }).sort({ createdAt: 1 });
+    res.json(messages);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching messages" });
+  }
+};
 
-//     const newMessage = new Message({ senderId, receiverId, message });
-//     await newMessage.save();
+// Add a new message
+export const addMessage = async (req, res) => {
+  const { username, text, community } = req.body;
 
-//     res.status(201).json(newMessage);
-//   } catch (error) {
-//     res.status(500).json({ error: "Failed to send message" });
-//   }
-// };
-
-// // Get chat history between two users
-// const getMessages = async (req, res) => {
-//   try {
-//     const { senderId, receiverId } = req.params;
-
-//     const messages = await find({
-//       $or: [
-//         { senderId, receiverId },
-//         { senderId: receiverId, receiverId: senderId },
-//       ],
-//     }).sort({ createdAt: 1 });
-
-//     res.status(200).json(messages);
-//   } catch (error) {
-//     res.status(500).json({ error: "Failed to fetch messages" });
-//   }
-// };
-
-// export default { sendMessage, getMessages };
+  try {
+    const newMessage = new Message({ username, text, community });
+    await newMessage.save();
+    res.status(201).json(newMessage);
+  } catch (error) {
+    res.status(500).json({ message: "Error saving message" });
+  }
+};

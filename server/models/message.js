@@ -1,13 +1,13 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const MessageSchema = new mongoose.Schema(
+const messageSchema = mongoose.Schema(
   {
-    senderId: { type: String, required: true },
-    receiverId: { type: String, required: true },
-    message: { type: String, required: true },
+    username: { type: String, required: true },
+    text: { type: String, required: true },
+    community: { type: String, required: true },
   },
   { timestamps: true }
 );
-const Message=new mongoose.Schema("Message",MessageSchema);
 
+const Message = mongoose.model("Message", messageSchema);
 export default Message;

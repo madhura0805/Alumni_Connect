@@ -3,6 +3,7 @@ import Alumni from '../models/alumni.js';
 export const searchAlumni = async (req, res) => {
   try {
     const { query } = req.query;
+    console.log("recieved search query",query);
 
     if (!query) {
       return res.status(400).json({ message: 'Please provide a search query' });

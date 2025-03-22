@@ -9,7 +9,7 @@ const alumniSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
+    unique: true, // Ensure unique emails
   },
   password: {
     type: String,
@@ -17,6 +17,7 @@ const alumniSchema = new mongoose.Schema({
   },
   yoe: {
     type: Number,
+    default: 0,
   },
   currentJobProfile: {
     type: String,
@@ -31,7 +32,7 @@ const alumniSchema = new mongoose.Schema({
     unique: true,
     validate: {
       validator: function (value) {
-        return /^(https?:\/\/)?(www\.)?linkedin\.com\/.*$/.test(value);
+        return /^(https?:\/\/)?(www\.)?linkedin\.com\/(in|company)\/[a-zA-Z0-9_-]+\/?$/.test(value);
       },
       message: "Please enter a valid LinkedIn profile URL",
     },
@@ -56,14 +57,13 @@ const alumniSchema = new mongoose.Schema({
       required: true,
     }
   }]
-});
+}, { timestamps: true });
 
 // Pre-save hook to hash the password
 alumniSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   try {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+    this.password = await bcrypt.hash(this.password, 10);
     next();
   } catch (error) {
     next(error);
@@ -75,5 +75,4 @@ alumniSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-const Alumni = mongoose.model("Alumni", alumniSchema);
-export default Alumni;
+export default mongoose.model("Alumni", alumniSchema);

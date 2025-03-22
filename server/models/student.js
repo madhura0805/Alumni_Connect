@@ -9,6 +9,7 @@ const studentSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true, // Ensure unique emails
   },
   password: {
     type: String,
@@ -17,20 +18,19 @@ const studentSchema = new mongoose.Schema({
   reg_no: {
     type: String,
     required: true,
-    unique: true,
+    unique: true, // Ensure unique registration numbers
   },
   department: {
     type: String,
     required: true,
-  }
-});
+  },
+}, { timestamps: true }); // Automatically adds createdAt & updatedAt fields
 
 // Pre-save hook to hash the password
 studentSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   try {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+    this.password = await bcrypt.hash(this.password, 10);
     next();
   } catch (error) {
     next(error);
@@ -42,5 +42,4 @@ studentSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-const Student = mongoose.model("Student", studentSchema);
-export default Student;
+export default mongoose.model("Student", studentSchema);
