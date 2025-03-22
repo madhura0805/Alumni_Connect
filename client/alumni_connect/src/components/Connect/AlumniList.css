@@ -1,76 +1,89 @@
-/* Alumni List Container */
-.alumni-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
-    gap: 20px;
-    padding: 20px;
-    justify-content: center;
-  }
-  
-  /* Alumni Card */
-  .alumni-card {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    text-align: center;
-    transition: transform 0.2s ease-in-out;
-  }
-  
-  .alumni-card:hover {
-    transform: translateY(-5px); /* Subtle hover effect */
-  }
-  
-  /* Alumni Image */
-  .alumni-img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 10px;
-    border: 3px solid #007bff;
-  }
-  
-  /* Alumni Name */
-  .alumni-card h3 {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 5px;
-  }
-  
-  /* Job & Company Info */
-  .alumni-card p {
-    font-size: 14px;
-    color: #666;
-    margin: 5px 0;
-  }
-  
-  /* LinkedIn Profile Link */
-  .alumni-card a {
-    display: inline-block;
-    margin-top: 8px;
-    text-decoration: none;
-    color: #007bff;
-    font-weight: bold;
-  }
-  
-  .alumni-card a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Error Message */
-  .error-message {
-    color: red;
-    text-align: center;
-    font-size: 16px;
-    margin-top: 10px;
-  }
-  
-  /* No Results */
-  .no-results {
-    text-align: center;
-    font-size: 16px;
-    color: #777;
-  }
-  
+.alumni-profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f3f2ef;
+  padding: 20px;
+}
+
+.alumni-card {
+  background: white;
+  padding: 40px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 1000px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.alumni-img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  border: 4px solid #0077b5;
+}
+
+.alumni-name {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+.alumni-job {
+  font-size: 22px;
+  color: #555;
+  text-align: center;
+}
+
+.alumni-exp,
+.alumni-grad,
+.alumni-edu {
+  font-size: 20px;
+  color: #666;
+  text-align: center;
+}
+
+.alumni-internships {
+  margin-top: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.alumni-internships h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.alumni-internships ul {
+  list-style: none;
+  padding: 0;
+}
+
+.alumni-internships li {
+  font-size: 18px;
+  color: #444;
+  margin-bottom: 5px;
+}
+
+.linkedin-btn {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 12px 24px;
+  background-color: #0077b5;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.linkedin-btn:hover {
+  background-color: #005582;
+}

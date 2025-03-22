@@ -18,11 +18,13 @@
     font-size: 2.5rem;
     margin-bottom: 20px;
     white-space: nowrap;
+    color: white;
     
 }
   
   .welcome-text p {
     font-size: 1.2rem;
+    color: white;
   }
   
   .welcome-photo {

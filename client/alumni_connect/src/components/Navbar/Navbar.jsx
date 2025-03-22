@@ -16,7 +16,7 @@ function Navbar() {
     <div>
       <nav className="navbar">
         <div className="logo">
-          <NavLink to="/">Logo</NavLink> {/* Replace with logo */}
+          <NavLink to="/">AlumniX</NavLink> {/* Replace with logo */}
         </div>
         <div className="nav-links">
           <li>

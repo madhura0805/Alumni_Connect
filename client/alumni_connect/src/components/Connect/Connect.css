@@ -125,8 +125,8 @@
 
 .alumni-list {
   display: grid;
-  grid-template-columns: repeat(3, 200px); /* Fixed 3 columns, each 200px wide */
-  gap: 40px; /* Space between items */
+  grid-template-columns: repeat(4, 275px); 
+  gap: 50px; /* Space between items */
   padding: 20px;
   justify-content:flex-start;
 }

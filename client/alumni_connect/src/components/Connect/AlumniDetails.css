@@ -1,18 +1,138 @@
-.alumni-detail {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .alumni-img-large {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-  }
-  
-  .linkedin-link {
-    color: #0077b5;
-    font-weight: bold;
-  }
-  
+/* Center the profile page */
+.alumni-profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to right, #b8bcbf, #bde4f7); /* LinkedIn blue gradient */
+  padding-top: 80px; /* Adjust for navbar */
+}
+
+/* Card Design */
+.profile-card {
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+.profile-card:hover {
+  transform: scale(1.02);
+}
+
+/* Profile Image */
+.profile-img {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 4px solid #0077b5;
+  margin-bottom: 20px;
+}
+
+/* Name & Title */
+.profile-name {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.profile-title {
+  font-size: 18px;
+  color: #555;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* Details */
+p {
+  font-size: 16px;
+  color: #666;
+  margin: 8px 0;
+}
+/* Internships Section */
+.internships {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.internships h3 {
+  font-size: 20px;
+  color: #0077b5;
+  font-weight: bold;
+  border-bottom: 2px solid #0077b5;
+  display: inline-block;
+  padding-bottom: 4px;
+  margin-bottom: 12px;
+}
+
+/* Internship List */
+.internship-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Individual Internship */
+.internship-card {
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.internship-card:hover {
+  transform: scale(1.02);
+}
+
+/* Internship Role & Company */
+.internship-role,
+.internship-company {
+  font-size: 16px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.internship-role {
+  font-weight: bold;
+  color: #0056b3;
+}
+
+.internship-company {
+  font-weight: normal;
+  color: #666;
+}
+
+/* LinkedIn Button */
+.linkedin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  text-decoration: none;
+  background: #0077b5;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.linkedin-btn:hover {
+  background: #005f8a;
+}

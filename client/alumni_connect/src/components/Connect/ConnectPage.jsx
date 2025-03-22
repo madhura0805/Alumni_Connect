@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AlumniCard from "./alumniCard.jsx";
-import SearchAlumni from "./searchAlumni.jsx";
+import SearchAlumni from './searchAlumni.jsx';
 import "./Connect.css";
 
 const Connect = () => {
@@ -14,6 +14,8 @@ const Connect = () => {
     try {
       const response = await fetch("http://localhost:5000/api/student/connect");
       const data = await response.json();
+      console.log("API Response:", data); // Debugging: Check if correct data is returned
+
       setAlumni(data);
     } catch (error) {
       console.error("Error fetching alumni:", error);
@@ -22,8 +24,9 @@ const Connect = () => {
 
   const fetchSearchResults = async (searchQuery) => {
     try {
-      const response = await fetch("http://localhost:5000/api/search?query=${searchQuery}");
+      const response = await fetch(`http://localhost:5000/api/search?query=${searchQuery}`);
       const data = await response.json();
+      console.log("API Response:", data);
       setAlumni(data); // Update UI with search results
     } catch (error) {
       console.error("Error fetching search results:", error);

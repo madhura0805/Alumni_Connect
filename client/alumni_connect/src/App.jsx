@@ -1,13 +1,13 @@
 import './App.css';
-import Home from './components/Page/Home';
-import Connect from './components/Connect/Connect';
-import Community from './components/Page/Community';
-import Blogs from './components/Page/Blogs';
+import Home from './Page/Home.jsx';
+import Connect from './components/Connect/ConnectPage.jsx'
+import Blogs from '../src/Page/Blogs.jsx';
 import Navbar from './components/Navbar/Navbar'; 
-import Chat from './components/Chat/chat'
+import Chat from '../src/components/community/ChatPage.jsx'
 import SignUp from './components/SignUp/SignUp';
 import Login from './components/LogIn/LogIn';
 import AlumniDetails from './components/Connect/AlumniDetails.jsx';
+import Community from "./components/community/CommunityPage.jsx"
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -54,13 +54,23 @@ const router = createBrowserRouter([
         <AlumniDetails />
       </div>
     ),
-  },  
+  },
+  {
+    path:"chat/:community",
+    element:(
+      <div>
+        <Navbar>
+        </Navbar>
+        <Chat></Chat>
+      </div>
+    )
+  },
   {
     path: "/community",
     element: (
       <div>
         <Navbar />
-        <Community />
+        <Community/>
       </div>
     ),
   },

@@ -36,3 +36,24 @@
     margin-top: 5px;
     text-align: center;
 }
+.know-more-btn {
+    background: #005f8a; /* Dark blue */
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 14px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 10px;
+    transition: background 0.3s ease, transform 0.2s;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.know-more-btn:hover {
+    background: #004766;
+    transform: scale(1.05);
+}
+
