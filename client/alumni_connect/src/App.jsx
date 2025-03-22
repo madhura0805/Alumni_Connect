@@ -1,35 +1,101 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import Home from './Page/Home.jsx';
+import Connect from './components/Connect/ConnectPage.jsx'
+import Blogs from '../src/Page/Blogs.jsx';
+import Navbar from './components/Navbar/Navbar'; 
+import Chat from '../src/components/community/ChatPage.jsx'
+import SignUp from './components/SignUp/SignUp';
+import Login from './components/LogIn/LogIn';
+import AlumniDetails from './components/Connect/AlumniDetails.jsx';
+import Community from "./components/community/CommunityPage.jsx"
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <div>
+        <Navbar />
+        <Home />
+      </div>
+    ),
+  },
+  {
+    path:"signup",
+    element:(
+      <div>
+        <SignUp></SignUp>
+      </div>
+    ),
+  },
+ 
+  {
+    path:"/login",
+    element:(
+      <div>
+        <Login></Login>
+      </div>
+    ),
+  },
+  {
+    path: "/connect",
+    element: (
+      <div>
+        <Navbar />
+        <Connect />
+      </div>
+    ),
+  },
+  {
+    path: "/alumni/:id",
+    element: (
+      <div>
+        <Navbar />
+        <AlumniDetails />
+      </div>
+    ),
+  },
+  {
+    path:"chat/:community",
+    element:(
+      <div>
+        <Navbar>
+        </Navbar>
+        <Chat></Chat>
+      </div>
+    )
+  },
+  {
+    path: "/community",
+    element: (
+      <div>
+        <Navbar />
+        <Community/>
+      </div>
+    ),
+  },
+  {
+    path: "/blogs",
+    element: (
+      <div>
+        <Navbar />
+        <Blogs />
+      </div>
+    ),
+  },
+
+  {
+    path: "*",
+    element: <div>404 - Page Not Found</div>,
+  }
+]);
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <RouterProvider router={router} />
+    </div>
+  );
 }
 
-export default App
+export default App;

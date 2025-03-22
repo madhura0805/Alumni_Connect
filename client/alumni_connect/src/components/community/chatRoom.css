@@ -1,0 +1,207 @@
+/* Full-Screen Chat Layout */
+.chat-page {
+  width:100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #e3e6e8, #f8f9fa);
+  overflow-x: hidden;
+  
+}
+
+.chat-container {
+  width: 80vw;
+  height: 95vh;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  overflow-x: hidden;
+}
+
+/* Chat Header */
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #03468e;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* Messages Area */
+.messages {
+  flex-grow: 1;
+  padding: 15px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #f0f2f5;
+}
+
+/* Message Styling */
+.message {
+  padding: 12px 15px;
+  border-radius: 18px;
+  max-width: 70%;
+  word-wrap: break-word;
+  font-size: 16px;
+}
+
+/* User's Messages */
+.my-message {
+  background-color: #03468e;
+  color: white;
+  align-self: flex-end;
+  text-align: right;
+}
+
+/* Other Users' Messages */
+.other-message {
+  background-color: #e5e5e5;
+  color: black;
+  align-self: flex-start;
+  text-align: left;
+}
+
+/* Input Area */
+.input-area {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background: white;
+  border-top: 2px solid #ddd;
+}
+
+/* Input Field */
+.input-field {
+  flex-grow: 1;
+  padding: 12px;
+  border: 2px solid #ccc;
+  border-radius: 25px;
+  font-size: 16px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.input-field:focus {
+  border-color: #003d80;
+}
+
+/* Send Button */
+.send-button {
+  background: #003f7f;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 25px;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.send-button:hover {
+  background: #003f7f;
+}
+
+/* Emoji Button */
+.emoji-button {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+/* Emoji Picker */
+.emoji-picker {
+  position: absolute;
+  bottom: 60px;
+  left: 20px;
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  gap: 5px;
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+  background: #121212; /* Darker background for full-screen layout */
+  color: #e0e0e0; /* Light gray text for readability */
+}
+
+.dark-mode .chat-container {
+  background: #1e1e1e; /* Dark gray container */
+  border: 1px solid #333; /* Subtle border */
+}
+
+.dark-mode .chat-header {
+  background: #03468e; /* Keep the blue theme */
+  color: white;
+}
+
+.dark-mode .messages {
+  background: #252525; /* Slightly lighter dark background */
+}
+
+/* Messages */
+.dark-mode .message {
+  background: #333; /* Dark gray bubbles */
+  color: #e0e0e0; /* Light gray text */
+}
+
+.dark-mode .my-message {
+  background-color: #03468e; /* Blue for user messages */
+  color: white;
+}
+
+.dark-mode .other-message {
+  background-color: #444; /* Dark gray for others */
+  color: #ddd;
+}
+
+/* Input Field */
+.dark-mode .input-area {
+  background: #222; /* Match dark mode theme */
+  border-top: 1px solid #333;
+}
+
+.dark-mode .input-field {
+  background: #333; /* Dark but readable */
+  color: white;
+  border: 2px solid #555;
+}
+
+.dark-mode .input-field::placeholder {
+  color: #bbb; /* Softer gray for placeholder */
+}
+
+/* Send Button */
+.dark-mode .send-button {
+  background:  #03468e;
+  color: white;
+}
+
+.dark-mode .send-button:hover {
+  background: #0056b3;
+}
+
+/* Emoji Button */
+.dark-mode .emoji-button {
+  color: white;
+}
+
+/* Light Mode Button */
+.dark-mode .dark-mode-toggle {
+  background: #222;
+  color: white;
+  border: 1px solid #444;
+}
