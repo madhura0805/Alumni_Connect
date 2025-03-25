@@ -1,11 +1,44 @@
-import React from 'react'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import '../index.css';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Layout from '../components/Blogs/Layout';
+import ErrorPage from '../pages/ErrorPage'
+import Home from '../pages/Home'
+import PostDetail from '../pages/PostDetail'
+import CreatePost from '../pages/CreatePost'
+import CategoryPosts from '../pages/CategoryPosts'
+import AuthorPosts from '../pages/AuthorPosts'
+import Dashboard from '../pages/Dashboard'
+import EditPost from '../pages/EditPost'
+import DeletePost from '../pages/DeletePost'
 
-const Blogs = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout/>,
+    errorElement: <ErrorPage/>,
+    children:[
+      {index:true,element:<Home/>},
+      {path: "posts/:id",element:<PostDetail/>},
+      {path: "create",element: <CreatePost/>},
+      {path: "posts/categories/:category",element: <CategoryPosts/>},
+      {path: "posts/users/:id",element: <AuthorPosts/>},
+      {path: "myposts/:id",element: <Dashboard/>},
+      {path: "posts/:id/edit",element:<EditPost/>},
+      {path: "posts/:id/delete",element:<DeletePost/>},
 
-export default Blogs
+    ]
+     
+
+  }
+])
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <RouterProvider router ={router}/>
+  </React.StrictMode>
+);
+
+

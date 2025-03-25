@@ -1,7 +1,6 @@
 import './App.css';
 import Home from './Page/Home.jsx';
 import Connect from './components/Connect/ConnectPage.jsx'
-import Blogs from '../src/Page/Blogs.jsx';
 import Navbar from './components/Navbar/Navbar'; 
 import Chat from '../src/components/community/ChatPage.jsx'
 import SignUp from './components/SignUp/SignUp';
@@ -9,6 +8,7 @@ import Login from './components/LogIn/LogIn';
 import AlumniDetails from './components/Connect/AlumniDetails.jsx';
 import Community from "./components/community/CommunityPage.jsx"
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Layout from './components/Blogs/Layout.jsx';
 
 const router = createBrowserRouter([
   {
@@ -79,7 +79,7 @@ const router = createBrowserRouter([
     element: (
       <div>
         <Navbar />
-        <Blogs />
+        <Layout />
       </div>
     ),
   },
