@@ -66,5 +66,20 @@ io.on("connection", (socket) => {
   });
 });
 
+// const userRoutes = require('./routes/userRoutes');
+import postRoutes from './routes/postRoutes.js';
+import { notFound, errorHandler } from './middlewares/errorMiddleware.js';
+
+app.use(express.json({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
+app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
+
+// Routes
+// app.use("/api/users", userRoutes);
+app.use("/api/posts", postRoutes); 
+
+app.use(notFound);
+app.use(errorHandler);
+
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));

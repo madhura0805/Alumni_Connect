@@ -40,3 +40,26 @@
 // {
 //     protect
 // };
+
+import jwt from 'jsonwebtoken';
+import  HttpError from '../models/errorModel';
+
+const AuthMiddleware = async (req, res, next) => {
+    const authHeader = req.headers.authorization || req.headers.Authorization;
+    if (authHeader && authHeader.startsWith("Bearer")) {
+        const token = authHeader.split(' ')[1];
+    
+        jwt.verify(token, process.env.JWT_SECRET, (err, info) => {
+            if (err) {
+                return next(new HttpError("Unauthorized. Invalid token.", 403));
+            }
+
+            req.user = { id: info.id, role: info.role }; 
+            next();
+        });
+    } else {
+        return next(new HttpError("Unauthorized. No token", 402));
+    }
+};
+
+export default AuthMiddleware;
