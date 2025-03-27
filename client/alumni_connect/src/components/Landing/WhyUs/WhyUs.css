@@ -1,0 +1,59 @@
+.why-us {
+    text-align: center;
+    padding: 20px 20px;
+}
+
+.why-us h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.highlight {
+    color: #0A59A3;
+}
+
+.why-us-container {
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+    gap: 70px; /* Adjust spacing */
+    flex-wrap: wrap; /* Responsive */
+}
+
+.why-us-card {
+    display: flex;
+    align-items: center;
+    background-color: #0A59A3;
+    color: white;
+    padding: 10px;
+    border-radius: 0px 0px 20px 20px; 
+    max-width: 500px; 
+    gap: 30px;
+    flex: 1;
+    min-width: 300px;
+}
+
+
+.why-us-icon img {
+    width: 80px; 
+    height: auto;
+}
+
+.why-us-text {
+    display: flex;
+    flex-direction: column; /* Ensures heading appears above text */
+    text-align: left;
+    flex: 1;
+}
+
+.why-us-text h3 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.why-us-text p {
+    font-size: 1.2rem;
+    margin-top: 0;
+}
