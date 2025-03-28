@@ -11,7 +11,7 @@ body {
 }
 
 .header {
-  background-color: #0056b3;
+  background-color: #0A59A3;
   color: white;
   padding: 20px;
   font-size: 24px;
@@ -30,7 +30,7 @@ body {
 }
 
 .category-card {
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   width: 90%;
   max-width: 500px;
   padding: 15px;
@@ -54,7 +54,7 @@ body {
 }
 
 .join-button {
-  background-color: #0056b3;
+  background-color: #0A59A3;
   color: white;
   border: none;
   padding: 10px 15px;
@@ -65,20 +65,22 @@ body {
 }
 
 .join-button:hover {
-  background-color: #003d80;
+  background-color: rgb(3, 55, 110);
 }
 
 .chat-container {
-  max-width: 500px;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  background: white;
+  width: 100vw; 
+  height: 88vh;
+  display: flex;
+  flex-direction: column;
+  background: rgb(255, 255, 255);
+  border-radius: 0; /* Remove border-radius */
+  box-shadow: none; /* Remove shadow */
+  overflow-x: hidden;
 }
-
 .messages {
-  max-height: 300px;
+  flex: 1;
+  height: 90vh;
   overflow-y: auto;
   border: 1px solid #ddd;
   padding: 10px;
@@ -91,10 +93,11 @@ body {
   margin: 5px 0;
   border-radius: 5px;
   border: 1px solid #ccc;
+  
 }
 
 .send-button {
-  background-color: #007bff;
+  background-color: #0A59A3;
   color: white;
   padding: 10px;
   width: 100%;
@@ -103,6 +106,65 @@ body {
   border-radius: 5px;
 }
 
+
 .send-button:hover {
   background-color: #003d80;
 }
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 88vh;
+  width: 100%;
+}
+
+.chat-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  background: #f1f3f5;
+  border-radius: 8px;
+  padding: 5px 10px; 
+  margin: 5px 0;
+  max-width: 70%;
+  font-size: 14px;
+  word-wrap: break-word;
+}
+
+.my-message {
+  display: flex;
+  align-self: flex-end;
+  background: #d4e7fe;
+  color: #333;
+  border-radius: 8px;
+  padding: 5px 10px; 
+  margin: 5px 0;
+  max-width: 70%;
+  font-size: 14px;
+  word-wrap: break-word;
+  
+}
+
+.other-message{
+  display: flex;
+  align-self: flex-end;
+  background: #f1f3f5;
+  color: #333;
+  border-radius: 8px;
+  padding: 5px 10px; 
+  margin: 5px 0;
+  max-width: 70%;
+  font-size: 14px;
+  word-wrap: break-word;
+  
+}
+
+

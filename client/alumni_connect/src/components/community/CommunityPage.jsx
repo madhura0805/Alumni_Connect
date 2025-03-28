@@ -1,6 +1,6 @@
 import React from "react";
 import CommunityList from "./CommunityList";
-import "./style.css";
+import "./communitypage.css";
 
 const Community = () => {
   return (
