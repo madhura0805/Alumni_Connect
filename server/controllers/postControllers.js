@@ -1,18 +1,12 @@
 import Post from '../models/postModel.js';
-import User  from '../models/userModels.js';
+import User from '../models/userModels.js';
 import path from 'path';
-import fs from 'fs';
 import { v4 as uuid } from 'uuid';
-import  HttpError from '../models/errorModel.js';
+import HttpError from '../models/errorModel.js';
 
-// CREATE A POST (Only Alumni)
+// CREATE A POST 
 const createPost = async (req, res, next) => {
-    
     try {
-        if (req.user.role !== "alumni") {
-            return next(new HttpError("Access Denied: Only alumni can create posts.", 403));
-        }
-
         let { title, category, description } = req.body;
         if (!title || !category || !description || !req.files) {
             return next(new HttpError("Fill in all fields and choose a thumbnail.", 422));
@@ -42,7 +36,7 @@ const createPost = async (req, res, next) => {
     }
 };
 
-// EDIT POST (Only Alumni)
+// EDIT POST 
 const editPost = async (req, res, next) => {
     try {
         const postId = req.params.id;
@@ -53,7 +47,7 @@ const editPost = async (req, res, next) => {
         }
 
         const oldPost = await Post.findById(postId);
-        if (req.user.role !== "alumni" || req.user.id !== oldPost.creator.toString()) {
+        if (req.user.id !== oldPost.creator.toString()) {
             return next(new HttpError("Access Denied: You can only edit your own posts.", 403));
         }
 
@@ -68,7 +62,7 @@ const editPost = async (req, res, next) => {
     }
 };
 
-// DELETE POST (Only Alumni)
+// DELETE POST 
 const deletePost = async (req, res, next) => {
     try {
         const postId = req.params.id;
@@ -77,7 +71,7 @@ const deletePost = async (req, res, next) => {
         }
 
         const post = await Post.findById(postId);
-        if (req.user.role !== "alumni" || req.user.id !== post.creator.toString()) {
+        if (req.user.id !== post.creator.toString()) {
             return next(new HttpError("Access Denied: You can only delete your own posts.", 403));
         }
 
@@ -91,4 +85,4 @@ const deletePost = async (req, res, next) => {
     }
 };
 
-export  { createPost, editPost, deletePost };
+export { createPost, editPost, deletePost };

@@ -1,7 +1,6 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { UserContext } from '../context/UserContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -13,59 +12,49 @@ const EditPost = () => {
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
-  const { id } = useParams(); // ✅ Fixed useParams()
+  const { id } = useParams();
 
-  const { currentUser } = useContext(UserContext);
-  const token = currentUser?.token;
-
-  // Redirect students away from this page
-  useEffect(() => {
-    if (currentUser?.role !== 'alumni') {
-      navigate('/');
-    }
-  }, [currentUser, navigate]);
-
-  // Fetch post details
+  // Fetch existing post details
   useEffect(() => {
     const getPost = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/posts/${id}`);
+        const response = await axios.get(`http://localhost:5000/api/posts/${id}`);
         setTitle(response.data.title);
         setDescription(response.data.description);
         setCategory(response.data.category);
       } catch (error) {
-        console.log(error);
+        console.log("❌ Error fetching post:", error.response?.data || error.message);
       }
     };
     getPost();
-  }, [id]); // ✅ Added `id` as a dependency
+  }, [id]);
 
   const editPost = async (e) => {
     e.preventDefault();
-    if (currentUser?.role !== 'alumni') {
-      setError("Access Denied: Only alumni can edit posts.");
-      return;
-    }
 
     const postData = new FormData();
-    postData.set('title', title);
-    postData.set('category', category);
-    postData.set('description', description);
+    postData.append('title', title);
+    postData.append('category', category);
+    postData.append('description', description);
     if (thumbnail) {
-      postData.set('thumbnail', thumbnail);
+      postData.append('image', thumbnail); // Ensure backend expects "image"
     }
 
     try {
-      const response = await axios.patch(`${process.env.REACT_APP_BASE_URL}/posts/${id}`, postData, {
+      const response = await axios.patch(`http://localhost:5000/api/posts/${id}`, postData, {
         withCredentials: true,
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
 
+      console.log("✅ Post Updated Successfully:", response.data);
       if (response.status === 200) {
-        navigate('/');
+        navigate('/blogs'); // Redirect after update
       }
     } catch (error) {
-      setError(error.response?.data?.message || "An error occurred while updating the post.");
+      console.error("❌ Error updating post:", error.response?.data || error.message);
+      setError(error.response?.data?.message || 'Error updating post');
     }
   };
 
@@ -144,3 +133,5 @@ const EditPost = () => {
 };
 
 export default EditPost;
+
+

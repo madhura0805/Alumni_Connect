@@ -1,26 +1,22 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import '../../blogs.css';
 
-import PostAuthor from './PostAuthor'
-const PostItem = ({postID, category, title, description,authorID, thumbnail,createdAt}) => {
-    
+const PostItem = ({ id, title, category, description, image, createdAt }) => {
   return (
-    <article className='post'>
-        <div className='post__thumbnail'>
-        <img src={`${process.env.REACT_APP_ASSESTS_URL}/uploads/${thumbnail}`} alt={title}/>
-        </div>
-        <div className="post__content">
-            <Link to={`/posts/${postID}`} >
-            <h3>{postTitle}</h3>
-            </Link>
-            <p dangerouslySetInnerHTML={{__html:description}}/>
-            <div className="post__footer">
-                <PostAuthor authorID = {authorID} createdAt = {createdAt}/>
-                <Link to ={`/posts/categories/${category}`} className='btn category'>{category}</Link>
-            </div>
-        </div>
-    </article>
-  )
-}
+    <Link to={`/blogs/posts/${id}`} className="post-item">
+      {image && (
+        <img
+          src={`data:image/jpeg;base64,${image}`}
+          alt="Post Thumbnail"
+        />
+      )}
+      <h3>{title}</h3>
+      <p>{category}</p>
+      <div dangerouslySetInnerHTML={{ __html: description }} />
+      <small>{new Date(createdAt).toLocaleString()}</small>
+    </Link>
+  );
+};
 
-export default PostItem
+export default PostItem;

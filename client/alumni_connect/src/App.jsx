@@ -1,14 +1,25 @@
 import './App.css';
 import Home from './Page/Home.jsx';
-import Connect from './components/Connect/ConnectPage.jsx'
+import Connect from './components/Connect/ConnectPage.jsx';
 import Navbar from './components/Navbar/Navbar'; 
-import Chat from '../src/components/community/ChatPage.jsx'
+import Chat from '../src/components/community/ChatPage.jsx';
 import SignUp from './components/SignUp/SignUp';
 import Login from './components/LogIn/LogIn';
 import AlumniDetails from './components/Connect/AlumniDetails.jsx';
-import Community from "./components/community/CommunityPage.jsx"
+import Community from "./components/community/CommunityPage.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from './components/Blogs/Layout.jsx';
+
+// Blog-related pages
+import HomePage from './pages/Home';
+import CreatePost from './pages/CreatePost';
+import PostDetail from './pages/PostDetail';
+import CategoryPosts from './pages/CategoryPosts';
+import AuthorPosts from './pages/AuthorPosts';
+import Dashboard from './pages/Dashboard';
+import EditPost from './pages/EditPost';
+import DeletePost from './pages/DeletePost';
+import ErrorPage from './pages/ErrorPage';
 
 const router = createBrowserRouter([
   {
@@ -21,19 +32,18 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path:"signup",
-    element:(
+    path: "signup",
+    element: (
       <div>
-        <SignUp></SignUp>
+        <SignUp />
       </div>
     ),
   },
- 
   {
-    path:"/login",
-    element:(
+    path: "/login",
+    element: (
       <div>
-        <Login></Login>
+        <Login />
       </div>
     ),
   },
@@ -56,21 +66,20 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path:"chat/:community",
-    element:(
+    path: "chat/:community",
+    element: (
       <div>
-        <Navbar>
-        </Navbar>
-        <Chat></Chat>
+        <Navbar />
+        <Chat />
       </div>
-    )
+    ),
   },
   {
     path: "/community",
     element: (
       <div>
         <Navbar />
-        <Community/>
+        <Community />
       </div>
     ),
   },
@@ -82,8 +91,17 @@ const router = createBrowserRouter([
         <Layout />
       </div>
     ),
+    children: [
+      { index: true, element: <HomePage /> },
+      { path: "create", element: <CreatePost /> },
+      { path: "posts/:id", element: <PostDetail /> },
+      { path: "categories/:category", element: <CategoryPosts /> },
+      { path: "users/:id", element: <AuthorPosts /> },
+      { path: "myposts/:id", element: <Dashboard /> },
+      { path: "posts/:id/edit", element: <EditPost /> },
+      { path: "posts/:id/delete", element: <DeletePost /> },
+    ],
   },
-
   {
     path: "*",
     element: <div>404 - Page Not Found</div>,

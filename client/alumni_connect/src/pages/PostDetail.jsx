@@ -1,62 +1,75 @@
-import React, { useContext, useEffect, useState } from 'react';
-import PostAuthor from '../components/Blogs/PostAuthor';
-import { Link, useParams } from 'react-router-dom';
-import { UserContext } from '../context/UserContext';
-import Loader from '../components/Blogs/Loader';
-import DeletePost from './DeletePost';
+import React, { useEffect, useState } from 'react';
+import { useParams,useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import "../blogs.css"
 
 const PostDetail = () => {
   const { id } = useParams();
   const [post, setPost] = useState(null);
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  const { currentUser } = useContext(UserContext);
+  
+  const navigate = useNavigate(); 
 
   useEffect(() => {
-    const getPost = async () => {
-      setIsLoading(true);
+    const fetchPost = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/posts/${id}`);
+        const response = await axios.get(`http://localhost:5000/api/posts/${id}`);
         setPost(response.data);
-      } catch (error) {
-        setError(error.response?.data?.message || "An error occurred while fetching the post.");
+      } catch (err) {
+        setError("Error fetching post.");
+      } finally {
+        setLoading(false);
       }
-      setIsLoading(false);
     };
-    getPost();
+
+    fetchPost();
   }, [id]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  const handleDelete = async () => {
+    if (!window.confirm("Are you sure you want to delete this post?")) return;
+  
+    try {
+      const response = await axios.delete(`http://localhost:5000/api/posts/${id}`);
+  
+      if (response.status === 200) {
+        navigate('/blogs'); // Redirect to blogs page after successful deletion
+      } else {
+        throw new Error("Failed to delete post");
+      }
+    } catch (error) {
+      console.error("❌ Error deleting post:", error);
+      setError("Failed to delete post");
+    }
+  };
+  
+
+  if (error) return <div className="error">{error}</div>;
+  if (!post) return <div className="not-found">Post not found.</div>;
 
   return (
-    <section className="post-detail">
-      {error && <p className='error'>{error}</p>}
-      {post && (
-        <div className="container post-detail__container">
-          <div className="post-detail__header">
-            <PostAuthor authorID={post.creator} createdAt={post.createdAt} />
-            
-            {/* 🔹 Hide Edit/Delete buttons from students */}
-            {currentUser?.role === 'alumni' && currentUser?.id === post?.creator && (
-              <div className="post-detail__buttons">
-                <Link to={`/posts/${post?._id}/edit`} className='btn sm primary'>Edit</Link>
-                <DeletePost postId={id} />
-              </div>
-            )}
-          </div>
-          
-          <h1>{post.title}</h1>
-          <div className="post-detail__thumbnail">
-            <img src={`${process.env.REACT_APP_ASSESTS_URL}/uploads/${post.thumbnail}`} alt="" />
-          </div>
-          <p dangerouslySetInnerHTML={{ __html: post.description }}></p>
+    <div className="post-container">
+      <h1 className="post-title">{post.title}</h1>
+      {post.image && (
+        <div className="post-image">
+          <img src={`data:image/jpeg;base64,${post.image}`} alt="Post Thumbnail" />
         </div>
       )}
-    </section>
+      <p className="post-category">{post.category}</p>
+      <div
+        className="post-description"
+        dangerouslySetInnerHTML={{ __html: post.description }}
+      ></div>
+
+      <small className="post-date">{new Date(post.createdAt).toLocaleString()}</small>
+
+      {/* Edit and Delete buttons */}
+      <div className="post-buttons">
+        <Link to={`/blogs/posts/${id}/edit`} className="btn primary">Edit</Link>
+        <button onClick={handleDelete} className="btn btn-delete">Delete</button>     
+        </div>
+    </div>
   );
 };
 
