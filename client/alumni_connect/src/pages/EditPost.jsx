@@ -6,7 +6,6 @@ import axios from 'axios';
 
 const EditPost = () => {
   const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('Uncategorized');
   const [description, setDescription] = useState('');
   const [thumbnail, setThumbnail] = useState(null);
   const [error, setError] = useState('');
@@ -21,7 +20,6 @@ const EditPost = () => {
         const response = await axios.get(`http://localhost:5000/api/posts/${id}`);
         setTitle(response.data.title);
         setDescription(response.data.description);
-        setCategory(response.data.category);
       } catch (error) {
         console.log("❌ Error fetching post:", error.response?.data || error.message);
       }
@@ -34,10 +32,9 @@ const EditPost = () => {
 
     const postData = new FormData();
     postData.append('title', title);
-    postData.append('category', category);
     postData.append('description', description);
     if (thumbnail) {
-      postData.append('image', thumbnail); // Ensure backend expects "image"
+      postData.append('image', thumbnail);
     }
 
     try {
@@ -83,10 +80,6 @@ const EditPost = () => {
     'link', 'image',
   ];
 
-  const POST_CATEGORIES = [
-    "Agriculture", "Business", "Education", "Entertainment", "Art", "Investment"
-  ];
-
   return (
     <div>
       <section className="create-post">
@@ -102,14 +95,6 @@ const EditPost = () => {
               onChange={e => setTitle(e.target.value)}
               autoFocus
             />
-
-            <select
-              name="category"
-              value={category}
-              onChange={e => setCategory(e.target.value)}
-            >
-              {POST_CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
-            </select>
 
             <ReactQuill
               modules={modules}
@@ -133,5 +118,3 @@ const EditPost = () => {
 };
 
 export default EditPost;
-
-

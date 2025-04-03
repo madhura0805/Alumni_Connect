@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 const DeletePost = ({ postId: id }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isLoading, setIsLoading] = useState(false);
 
   const removePost = async () => {
+    if (!id) return;
+    
     setIsLoading(true);
     try {
       const response = await axios.delete(`http://localhost:5000/api/posts/${id}`, { withCredentials: true });
@@ -19,19 +22,16 @@ const DeletePost = ({ postId: id }) => {
         }
       }
     } catch (error) {
-      console.log("❌ Error deleting post:", error);
+      console.error("❌ Error deleting post:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
-
   return (
-    <div>
-      <Link className="btn sm danger" onClick={removePost}>
-        Delete
-      </Link>
-    </div>
+    <button className="btn sm danger" onClick={removePost} disabled={isLoading}>
+      {isLoading ? 'Deleting...' : 'Delete'}
+    </button>
   );
 };
 

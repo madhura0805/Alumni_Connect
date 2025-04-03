@@ -7,12 +7,10 @@ import "../blogs.css";
 
 const CreatePost = () => {
   const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('Uncategorized');
   const [description, setDescription] = useState('');
   const [thumbnail, setThumbnail] = useState(null);
   const [error, setError] = useState('');
 
-  // Define navigate
   const navigate = useNavigate();
 
   const modules = {
@@ -34,19 +32,14 @@ const CreatePost = () => {
     'link', 'image',
   ];
 
-  const POST_CATEGORIES = [
-    "Agriculture", "Business", "Education", "Entertainment", "Art", "Investment"
-  ];
-
   const createPost = async (e) => {
     e.preventDefault();
   
     const postData = new FormData();
     postData.append('title', title);
-    postData.append('category', category);
     postData.append('description', description);
     if (thumbnail) {
-      postData.append('image', thumbnail);  // Image file
+      postData.append('image', thumbnail);
     }
   
     try {
@@ -58,7 +51,7 @@ const CreatePost = () => {
       });
   
       if (response.status === 201) {
-        navigate('/blogs');  // Navigate to home after creation
+        navigate('/blogs');
       }
     } catch (error) {
       console.error("Error response:", error.response);
@@ -67,10 +60,8 @@ const CreatePost = () => {
     }
   };
   
-  
   const handleFileChange = (e) => {
     if (e.target.files.length > 0) {
-      console.log('Selected image:', e.target.files[0]);  // Log the selected file
       setThumbnail(e.target.files[0]);
     }
   };
@@ -90,16 +81,6 @@ const CreatePost = () => {
               onChange={e => setTitle(e.target.value)} 
               autoFocus 
             />
-
-            <select 
-              name="category" 
-              value={category} 
-              onChange={e => setCategory(e.target.value)}
-            >
-              {POST_CATEGORIES.map(cat => (
-                <option key={cat} value={cat}>{cat}</option>
-              ))}
-            </select>
 
             <ReactQuill 
               modules={modules} 

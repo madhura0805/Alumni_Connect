@@ -4,21 +4,20 @@ import Post from '../models/Post.js';
 
 const router = express.Router();
 
-const storage = multer.memoryStorage(); // For in-memory storage (base64)
+const storage = multer.memoryStorage(); // Store image in memory (base64)
 const upload = multer({ storage });
 
 // Create a new post
 router.post('/', upload.single('image'), async (req, res) => {
-  const { title, category, description } = req.body;
+  const { title, description } = req.body;
   
-  if (!title || !category || !description) {
-    return res.status(400).json({ message: "All fields are required" });
+  if (!title || !description) {
+    return res.status(400).json({ message: "Title and description are required" });
   }
 
   try {
     const newPost = new Post({
       title,
-      category,
       description,
       image: req.file ? req.file.buffer.toString('base64') : null, // Store as base64
     });
@@ -26,21 +25,28 @@ router.post('/', upload.single('image'), async (req, res) => {
     await newPost.save();
     res.status(201).json(newPost);
   } catch (error) {
-    console.error(error); // Log the error for debugging
+    console.error(error);
     res.status(500).json({ message: "Error creating post", error: error.message });
   }
 });
-
-// Get all posts
+// Get all posts (with optional search by title)
 router.get('/', async (req, res) => {
   try {
-    const posts = await Post.find();
+    const { title } = req.query;
+    let query = {};
+
+    if (title) {
+      query.title = { $regex: title, $options: "i" }; // Case-insensitive search
+    }
+
+    const posts = await Post.find(query);
     res.status(200).json(posts);
   } catch (error) {
-    console.error(error); // Log error
+    console.error(error);
     res.status(500).json({ message: "Error fetching posts", error: error.message });
   }
 });
+
 
 // Get a single post by ID
 router.get('/:id', async (req, res) => {
@@ -51,21 +57,19 @@ router.get('/:id', async (req, res) => {
     }
     res.status(200).json(post);
   } catch (error) {
-    console.error(error); // Log error
+    console.error(error);
     res.status(500).json({ message: "Error fetching the post", error: error.message });
   }
 });
 
-
-//Edit a post
+// Edit a post
 router.patch('/:id', upload.single('image'), async (req, res) => {
   try {
-    const { title, category, description } = req.body;
+    const { title, description } = req.body;
     const updatedPost = await Post.findByIdAndUpdate(
       req.params.id,
       {
         title,
-        category,
         description,
         image: req.file ? req.file.buffer.toString('base64') : undefined, 
       },
@@ -83,25 +87,24 @@ router.patch('/:id', upload.single('image'), async (req, res) => {
   }
 });
 
+// Delete a post
 router.delete('/:id', async (req, res) => {
   try {
     const postId = req.params.id;
-    console.log(`Attempting to delete post with ID: ${postId}`);  // Log postId
-    
+    console.log(`Attempting to delete post with ID: ${postId}`);
+
     const deletedPost = await Post.findByIdAndDelete(postId);
     
     if (!deletedPost) {
       return res.status(404).json({ message: "Post not found" });
     }
     
-    console.log(`Post deleted: ${deletedPost}`);  // Log deleted post details
+    console.log(`Post deleted: ${deletedPost}`);
     res.status(200).json({ message: "Post deleted successfully" });
   } catch (error) {
     console.error("❌ Error deleting post:", error);
     res.status(500).json({ message: "Error deleting post", error: error.message });
   }
 });
-
-
 
 export default router;

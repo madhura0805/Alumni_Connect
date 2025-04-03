@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useParams,useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import "../blogs.css"
+import "../blogs.css";
 
 const PostDetail = () => {
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
-  
   const navigate = useNavigate(); 
 
   useEffect(() => {
@@ -43,7 +41,6 @@ const PostDetail = () => {
       setError("Failed to delete post");
     }
   };
-  
 
   if (error) return <div className="error">{error}</div>;
   if (!post) return <div className="not-found">Post not found.</div>;
@@ -56,7 +53,7 @@ const PostDetail = () => {
           <img src={`data:image/jpeg;base64,${post.image}`} alt="Post Thumbnail" />
         </div>
       )}
-      <p className="post-category">{post.category}</p>
+
       <div
         className="post-description"
         dangerouslySetInnerHTML={{ __html: post.description }}
@@ -68,7 +65,7 @@ const PostDetail = () => {
       <div className="post-buttons">
         <Link to={`/blogs/posts/${id}/edit`} className="btn primary">Edit</Link>
         <button onClick={handleDelete} className="btn btn-delete">Delete</button>     
-        </div>
+      </div>
     </div>
   );
 };

@@ -7,8 +7,8 @@ import HttpError from '../models/errorModel.js';
 // CREATE A POST 
 const createPost = async (req, res, next) => {
     try {
-        let { title, category, description } = req.body;
-        if (!title || !category || !description || !req.files) {
+        let { title, description } = req.body;
+        if (!title || !description || !req.files) {
             return next(new HttpError("Fill in all fields and choose a thumbnail.", 422));
         }
 
@@ -21,7 +21,13 @@ const createPost = async (req, res, next) => {
         thumbnail.mv(path.join(__dirname, '..', '/uploads', fileName), async (err) => {
             if (err) return next(new HttpError(err));
 
-            const newPost = await Post.create({ title, category, description, thumbnail: fileName, creator: req.user.id });
+            const newPost = await Post.create({ 
+                title, 
+                description, 
+                thumbnail: fileName, 
+                creator: req.user.id 
+            });
+
             if (!newPost) {
                 return next(new HttpError("Post couldn't be created.", 422));
             }
@@ -40,9 +46,9 @@ const createPost = async (req, res, next) => {
 const editPost = async (req, res, next) => {
     try {
         const postId = req.params.id;
-        let { title, category, description } = req.body;
+        let { title, description } = req.body;
 
-        if (!title || !category || description.length < 12) {
+        if (!title || description.length < 12) {
             return next(new HttpError("Fill in all fields.", 422));
         }
 
@@ -51,7 +57,11 @@ const editPost = async (req, res, next) => {
             return next(new HttpError("Access Denied: You can only edit your own posts.", 403));
         }
 
-        const updatedPost = await Post.findByIdAndUpdate(postId, { title, category, description }, { new: true });
+        const updatedPost = await Post.findByIdAndUpdate(postId, 
+            { title, description }, 
+            { new: true }
+        );
+
         if (!updatedPost) {
             return next(new HttpError("Couldn't update post.", 400));
         }
