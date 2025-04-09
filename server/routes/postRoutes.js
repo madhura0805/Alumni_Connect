@@ -9,17 +9,18 @@ const upload = multer({ storage });
 
 // Create a new post
 router.post('/', upload.single('image'), async (req, res) => {
-  const { title, description } = req.body;
-  
-  if (!title || !description) {
-    return res.status(400).json({ message: "Title and description are required" });
+  const { title, description, author } = req.body;
+
+  if (!title || !description || !author) {
+    return res.status(400).json({ message: "All fields are required" });
   }
 
   try {
     const newPost = new Post({
       title,
       description,
-      image: req.file ? req.file.buffer.toString('base64') : null, // Store as base64
+      author,
+      image: req.file ? req.file.buffer.toString('base64') : null,
     });
 
     await newPost.save();
@@ -29,14 +30,20 @@ router.post('/', upload.single('image'), async (req, res) => {
     res.status(500).json({ message: "Error creating post", error: error.message });
   }
 });
-// Get all posts (with optional search by title)
+
+// Get all posts (with optional search by title or author)
 router.get('/', async (req, res) => {
   try {
     const { title } = req.query;
     let query = {};
 
     if (title) {
-      query.title = { $regex: title, $options: "i" }; // Case-insensitive search
+      query = {
+        $or: [
+          { title: { $regex: title, $options: 'i' } },
+          { author: { $regex: title, $options: 'i' } },
+        ]
+      };
     }
 
     const posts = await Post.find(query);
@@ -46,6 +53,7 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: "Error fetching posts", error: error.message });
   }
 });
+
 
 
 // Get a single post by ID

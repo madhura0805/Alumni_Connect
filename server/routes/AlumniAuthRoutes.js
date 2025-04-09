@@ -1,8 +1,9 @@
 import express from 'express';
-import { SignUpAlumni, loginAlumni, sendOTP } from '../controllers/AuthController.js';
+import { SignUpAlumni, loginAlumni } from '../controllers/AuthController.js';
+import upload from "../middlewares/uploadMiddleware.js"
 const router = express.Router();
 
-router.post('/signup', SignUpAlumni);
+router.post("/signup", upload.single("profileImage"), SignUpAlumni);
 router.post('/login', loginAlumni);
 
 

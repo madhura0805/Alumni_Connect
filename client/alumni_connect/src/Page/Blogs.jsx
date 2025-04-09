@@ -16,7 +16,7 @@ import DeletePost from '../pages/DeletePost';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>  {/* Use BrowserRouter here */}
+    <BrowserRouter>  
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />

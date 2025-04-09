@@ -1,59 +1,66 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./Login.css"; // Make sure to create this file for styling
+import "./Login.css"; // Ensure you have this file for styling
 
 const Login = () => {
-  // Default role is "student"
   const [role, setRole] = useState("student");
-
-  // Form data: email and password are needed for login
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState(""); // Store login error message
   const navigate = useNavigate();
 
-  // Update form data on input change
+  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle form submission
+  // Handle login form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(""); // Clear previous errors
+
     try {
-      let response;
-      if (role === "student") {
-        // Student login endpoint
-        response = await axios.post("http://localhost:5000/api/student/auth/login", {
-          email: formData.email,
-          password: formData.password,
-        });
-      } else if (role === "alumni") {
-        // Alumni login endpoint
-        response = await axios.post("http://localhost:5000/api/alumni/auth/login", {
-          email: formData.email,
-          password: formData.password,
-        });
-      }
-      console.log("Login successful:", response.data);
-      
-      // Store token directly in localStorage
+      const endpoint =
+        role === "student"
+          ? "http://localhost:5000/api/student/auth/login"
+          : "http://localhost:5000/api/alumni/auth/login";
+
+      const response = await axios.post(endpoint, {
+        email: formData.email,
+        password: formData.password,
+      });
+
+      // Store token & user role in localStorage
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("role", role);
 
       // Redirect based on role
-      navigate(role === "student" ? "/" : "/");
+      if (role === "student") {
+        navigate("/connect");
+      } else {
+        navigate("/connect");
+      }
+      if (role === "alumni") {
+        localStorage.setItem("alumniUser", JSON.stringify({
+          name: response.data.name,
+          email: response.data.email
+        }));
+        navigate("/");
+      }
+      
     } catch (error) {
       console.error("Login error:", error.response?.data || error.message);
+      setError(error.response?.data?.message || "Login failed. Please try again.");
     }
   };
 
   return (
     <div className="login-container">
       <h1>Login</h1>
+      
+      {error && <div className="error-message">{error}</div>} {/* Display error if login fails */}
+
       <div className="role-toggle">
         <label>
           <input
@@ -76,6 +83,7 @@ const Login = () => {
           Alumni
         </label>
       </div>
+
       <form onSubmit={handleSubmit} className="login-form">
         <div className="form-field">
           <label>Email:</label>
@@ -88,6 +96,7 @@ const Login = () => {
             required
           />
         </div>
+
         <div className="form-field">
           <label>Password:</label>
           <input
@@ -99,6 +108,7 @@ const Login = () => {
             required
           />
         </div>
+
         <button type="submit" className="login-button">Login</button>
       </form>
     </div>

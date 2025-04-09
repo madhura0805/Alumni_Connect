@@ -10,8 +10,12 @@ const postSchema = new mongoose.Schema({
     required: true,
   },
   image: {
-    type: String,  
-    required: false,  
+    type: String,
+    required: false,
+  },
+  author: {
+    type: String,
+    required: true, 
   },
 }, { timestamps: true });
 

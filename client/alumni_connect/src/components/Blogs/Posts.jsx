@@ -12,7 +12,9 @@ const Posts = () => {
     const fetchPosts = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:5000/api/posts?title=${search}`);
+        const response = await axios.get(`http://localhost:5000/api/posts`, {
+          params: { title: search }
+        });
         setPosts(response.data);
       } catch (err) {
         console.error("Error fetching posts:", err);
@@ -21,19 +23,18 @@ const Posts = () => {
       }
     };
 
-    // Debounce API Calls (Wait 500ms after typing)
     const timer = setTimeout(() => {
       fetchPosts();
     }, 500);
 
-    return () => clearTimeout(timer); // Cleanup function
+    return () => clearTimeout(timer);
   }, [search]);
 
   return (
     <div className="posts-container">
       <input 
         type="text" 
-        placeholder="Search by title..." 
+        placeholder="Search by title or author..." 
         value={search} 
         onChange={(e) => setSearch(e.target.value)} 
         className="search-input"
@@ -49,7 +50,7 @@ const Posts = () => {
             title={post.title}
             image={post.image}
             createdAt={post.createdAt}
-            author={post.author}  
+            author={post.author}
           />
         )) : !loading && <p>No posts found.</p>}
       </div>

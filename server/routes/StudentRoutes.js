@@ -1,8 +1,9 @@
 import express from 'express';
-import ConnectController from '../controllers/ConnectController.js';
-// import {protect} from '../middlewares/AuthMiddleware.js';
+import { SignUpStudent, loginStudent ,sendOTP} from '../controllers/AuthController.js';
 const router = express.Router();
 
-router.get("/connect",ConnectController);
+router.post('/signup', SignUpStudent);
+router.post('/login', loginStudent);
+
 
 export default router;

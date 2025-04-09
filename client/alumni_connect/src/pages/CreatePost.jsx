@@ -35,9 +35,13 @@ const CreatePost = () => {
   const createPost = async (e) => {
     e.preventDefault();
   
+    const alumniData = JSON.parse(localStorage.getItem('alumniUser'));
+    const authorName = alumniData?.name;
+  
     const postData = new FormData();
     postData.append('title', title);
     postData.append('description', description);
+    postData.append('author', authorName); // ⬅️ Important
     if (thumbnail) {
       postData.append('image', thumbnail);
     }
@@ -55,10 +59,10 @@ const CreatePost = () => {
       }
     } catch (error) {
       console.error("Error response:", error.response);
-      console.error("Error message:", error.message);
       setError(error.response?.data?.message || 'Error creating post');
     }
   };
+  
   
   const handleFileChange = (e) => {
     if (e.target.files.length > 0) {

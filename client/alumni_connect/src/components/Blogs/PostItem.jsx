@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../../blogs.css';
 
-const PostItem = ({ id, title, image, createdAt, author }) => { // Added author prop
+const PostItem = ({ id, title, image, createdAt, author }) => {
   return (
     <Link to={`/blogs/posts/${id}`} className="post-item">
       {image ? (

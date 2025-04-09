@@ -8,7 +8,8 @@ const PostDetail = () => {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const navigate = useNavigate(); 
+  const [currentUser, setCurrentUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -23,16 +24,27 @@ const PostDetail = () => {
     };
 
     fetchPost();
+
+    // Get user from localStorage
+    const alumniUser = JSON.parse(localStorage.getItem("alumniUser"));
+    const studentUser = localStorage.getItem("role") === "student";
+
+    if (alumniUser) {
+      setCurrentUser(alumniUser);
+    } else if (studentUser) {
+      setCurrentUser({ role: "student" }); // set dummy student user for role check
+    }
   }, [id]);
 
   const handleDelete = async () => {
     if (!window.confirm("Are you sure you want to delete this post?")) return;
-  
+
     try {
-      const response = await axios.delete(`http://localhost:5000/api/posts/${id}`);
-  
+      const response = await axios.delete(`http://localhost:5000/api/posts/${id}`, {
+        withCredentials: true,
+      });
       if (response.status === 200) {
-        navigate('/blogs'); // Redirect to blogs page after successful deletion
+        navigate('/blogs');
       } else {
         throw new Error("Failed to delete post");
       }
@@ -45,9 +57,12 @@ const PostDetail = () => {
   if (error) return <div className="error">{error}</div>;
   if (!post) return <div className="not-found">Post not found.</div>;
 
+  const isAuthor = currentUser?.role !== "student" && currentUser?.name === post.author;
+
   return (
     <div className="post-container">
       <h1 className="post-title">{post.title}</h1>
+
       {post.image && (
         <div className="post-image">
           <img src={`data:image/jpeg;base64,${post.image}`} alt="Post Thumbnail" />
@@ -61,11 +76,13 @@ const PostDetail = () => {
 
       <small className="post-date">{new Date(post.createdAt).toLocaleString()}</small>
 
-      {/* Edit and Delete buttons */}
-      <div className="post-buttons">
-        <Link to={`/blogs/posts/${id}/edit`} className="btn primary">Edit</Link>
-        <button onClick={handleDelete} className="btn btn-delete">Delete</button>     
-      </div>
+      {/* ✅ Only show if the logged-in user is the author */}
+      {isAuthor && (
+        <div className="post-buttons">
+          <Link to={`/blogs/posts/${id}/edit`} className="btn primary">Edit</Link>
+          <button onClick={handleDelete} className="btn btn-delete">Delete</button>
+        </div>
+      )}
     </div>
   );
 };
