@@ -28,8 +28,13 @@ function Navbar() {
           {/* Show different links based on role */}
           {role === "student" ? (
             <>
+            <li>
+                <NavLink to="/connect" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+                  STUDENT CONNECT
+                </NavLink>
+              </li>
               <li>
-                <NavLink to="/connect-community" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+                <NavLink to="/community" className={({ isActive }) => (isActive ? 'active-link' : '')}>
                   STUDENT COMMUNITY
                 </NavLink>
               </li>
@@ -42,7 +47,10 @@ function Navbar() {
           ) : role === "alumni" ? (
             <>
               <li>
-                <NavLink to="/connect-community" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+                <NavLink to="/connect" className={({ isActive }) => (isActive ? 'active-link' : '')}>
+                  ALUMNI CONNECT
+                </NavLink>
+                <NavLink to="/community" className={({ isActive }) => (isActive ? 'active-link' : '')}>
                   ALUMNI COMMUNITY
                 </NavLink>
               </li>
