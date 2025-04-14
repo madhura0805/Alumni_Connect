@@ -1,7 +1,9 @@
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import { v4 as uuidv4 } from 'uuid';
 import cors from "cors";
+import Post from './models/Post.js';
 import dotenv from "dotenv";
 import connectDB from "./config/dbconnect.js";
 import StudentAuthRoutes from "./routes/StudentAuthRoutes.js";
@@ -11,12 +13,29 @@ import SearchAlumniRoutes from "./routes/SearchAlumniRoute.js";
 import ChatRoutes from "./routes/ChatRoutes.js";
 import Message from "./models/Message.js";
 import VerificationRoutes from './routes/VerificationRoute.js';
-import postRoutes from './routes/postRoutes.js';  // Correct import
-import multer from "multer";  // Import multer
+import postRoutes from './routes/postRoutes.js';  
+import multer from "multer";  
 import path from "path";  // Path module for handling file paths
 import { notFound, errorHandler } from './middlewares/errorMiddleware.js';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import alumniRoutes from './routes/AlumniRoutes.js'; 
+
+// Get the directory name of the current module (index.js)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Now you can use __dirname to join paths
+const uploadsDir = path.join(__dirname, 'uploads');
+
+// Ensure uploads directory exists
+import fs from 'fs';
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir);
+}
 
 dotenv.config();
+
 
 // Connect to the database
 connectDB();
@@ -42,15 +61,20 @@ app.use(express.urlencoded({ extended: true }));
 // Set up storage engine for Multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');  // Define the folder where images will be stored
+    cb(null, 'uploads/'); // Define where the file should be saved
   },
   filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + path.extname(file.originalname);
-    cb(null, file.fieldname + '-' + uniqueSuffix);  // Use a unique file name to avoid conflicts
+    const ext = path.extname(file.originalname); // Get the file extension
+    const uniqueName = uuidv4().slice(0, 8) + ext; // Generate a short UUID name
+    cb(null, uniqueName); // Use the generated unique name
   }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ 
+  storage,
+  limits: { fileSize: 10 * 1024 * 1024 } // 5MB limit
+});
+
 
 // Serve static files (images) from 'uploads' folder
 app.use('/uploads', express.static('uploads'));
@@ -63,14 +87,29 @@ app.use('/api/search', SearchAlumniRoutes);
 app.use('/api/chat', ChatRoutes);
 app.use('/api/auth', VerificationRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/api', alumniRoutes);
 
-// Image upload route (for handling file uploads)
-app.post('/api/upload', upload.single('image'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).send('No file uploaded');
+app.post('/api/posts', upload.single('image'), async (req, res) => {
+  if (req.fileValidationError) {
+    return res.status(400).json({ message: 'File size exceeds the limit (5MB)' });
   }
-  const imageUrl = `/uploads/${req.file.filename}`;  // Return the URL of the uploaded image
-  res.json({ imageUrl });
+
+  const { title, description, author } = req.body;
+  const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+
+  try {
+    const newPost = new Post({
+      title,
+      description,
+      author,
+      image: imageUrl,  // Save the shortened image URL
+    });
+
+    await newPost.save();
+    res.status(201).json({ message: 'Post created successfully!' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating post', error: error.message });
+  }
 });
 
 // Socket.io setup
@@ -111,9 +150,13 @@ io.on("connection", (socket) => {
   });
 });
 
+
+
+
 // Error Handling Middleware
 app.use(notFound);
 app.use(errorHandler);
+
 
 // Start the server
 const PORT = process.env.PORT || 5000;

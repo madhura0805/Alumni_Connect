@@ -125,11 +125,11 @@ const SignUp = () => {
       {error && <div className="error-message">{error}</div>}
 
       <div>
-        <label>
+        <label className="radio-label">
           <input type="radio" name="role" value="student" checked={role === "student"} onChange={() => setRole("student")} />
           Student
         </label>
-        <label>
+        <label className="radio-label">
           <input type="radio" name="role" value="alumni" checked={role === "alumni"} onChange={() => setRole("alumni")} />
           Alumni
         </label>

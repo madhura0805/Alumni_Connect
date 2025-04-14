@@ -14,7 +14,6 @@ import Layout from './components/Blogs/Layout.jsx';
 import HomePage from './pages/Home';
 import CreatePost from './pages/CreatePost';
 import PostDetail from './pages/PostDetail';
-import CategoryPosts from './pages/CategoryPosts';
 import AuthorPosts from './pages/AuthorPosts';
 import Dashboard from './pages/Dashboard';
 import EditPost from './pages/EditPost';
@@ -95,7 +94,6 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: "create", element: <CreatePost /> },
       { path: "posts/:id", element: <PostDetail /> },
-      { path: "categories/:category", element: <CategoryPosts /> },
       { path: "users/:id", element: <AuthorPosts /> },
       { path: "myposts/:id", element: <Dashboard /> },
       { path: "posts/:id/edit", element: <EditPost /> },

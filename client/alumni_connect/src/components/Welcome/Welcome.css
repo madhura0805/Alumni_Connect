@@ -21,6 +21,12 @@
     color: white;
     
 }
+.welcome-text h2 {
+  margin-bottom: 20px;
+  white-space: nowrap;
+  color: white;
+  
+}
   
   .welcome-text p {
     font-size: 1.2rem;

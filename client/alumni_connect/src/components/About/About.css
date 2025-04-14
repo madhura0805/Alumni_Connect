@@ -1,0 +1,88 @@
+.about {
+    background-color: #f3f9fc;
+    padding: 60px 20px;
+    text-align: center;
+  }
+  
+  .about h2 {
+    font-size: 2.8rem;
+    font-weight: bold;
+    margin-bottom: 40px;
+  }
+  
+  .about-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 50px;
+    color: #555;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .highlight {
+    color: #0056ff;
+  }
+  
+  .about-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+  }
+  
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    width: 320px;
+    padding: 30px 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+  }
+  
+  .icon-circle {
+    background-color: #e6f0ff;
+    border-radius: 50%;
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .icon {
+    font-size: 1.8rem;
+    color: #0A59A3;
+  }
+  
+  .card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+  }
+  
+  .card p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 20px;
+  }
+  
+  .btn {
+    background-color: #0A59A3;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.3s;
+  }
+  
+  .btn:hover {
+    background-color: #003bb3;
+  }
+  

@@ -26,6 +26,7 @@ const WhyUs = () => {
             <p>Building a strong professional network for career opportunities.</p>
           </div>
         </div>
+        
       </div>
     </section>
   );

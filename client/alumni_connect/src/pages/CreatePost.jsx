@@ -41,7 +41,7 @@ const CreatePost = () => {
     const postData = new FormData();
     postData.append('title', title);
     postData.append('description', description);
-    postData.append('author', authorName); // ⬅️ Important
+    postData.append('author', authorName); 
     if (thumbnail) {
       postData.append('image', thumbnail);
     }
@@ -66,15 +66,23 @@ const CreatePost = () => {
   
   const handleFileChange = (e) => {
     if (e.target.files.length > 0) {
-      setThumbnail(e.target.files[0]);
+      const file = e.target.files[0];
+      const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+      
+      if (allowedTypes.includes(file.type)) {
+        setThumbnail(file);
+      } else {
+        setError('Please select a valid image file (PNG, JPEG, JPG).');
+      }
     }
   };
+  
 
   return (
     <div>
       <section className="create-post">
         <div className="text_container">
-          <h2>Create Post</h2>
+          <h2>Create a New Blog</h2>
           {error && <p className='form__error-message'>{error}</p>}
           <form className='form create-post__form' onSubmit={createPost}>
             <input 

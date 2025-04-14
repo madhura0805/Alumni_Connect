@@ -1,3 +1,10 @@
+.radio-label {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 1rem; /* spacing between options */
+  gap: 0.4rem; /* spacing between radio and text */
+  font-size: 16px;
+}
 
 
 .signup-form {

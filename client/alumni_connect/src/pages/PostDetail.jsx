@@ -32,7 +32,7 @@ const PostDetail = () => {
     if (alumniUser) {
       setCurrentUser(alumniUser);
     } else if (studentUser) {
-      setCurrentUser({ role: "student" }); // set dummy student user for role check
+      setCurrentUser({ role: "student" }); 
     }
   }, [id]);
 
@@ -58,13 +58,12 @@ const PostDetail = () => {
   if (!post) return <div className="not-found">Post not found.</div>;
 
   const isAuthor = currentUser?.role !== "student" && currentUser?.name === post.author;
-
   return (
     <div className="post-container">
       <h1 className="post-title">{post.title}</h1>
 
       {post.image && (
-        <div className="post-image">
+        <div className="post-thumbnail">
           <img src={`data:image/jpeg;base64,${post.image}`} alt="Post Thumbnail" />
         </div>
       )}
@@ -76,7 +75,6 @@ const PostDetail = () => {
 
       <small className="post-date">{new Date(post.createdAt).toLocaleString()}</small>
 
-      {/* ✅ Only show if the logged-in user is the author */}
       {isAuthor && (
         <div className="post-buttons">
           <Link to={`/blogs/posts/${id}/edit`} className="btn primary">Edit</Link>
