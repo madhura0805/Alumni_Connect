@@ -4,7 +4,7 @@
 
 ## 📺 Demo Video
 
-👉 [Watch the Demo on YouTube](https://youtu.be/Pl26dveqHq0)
+👉 [Watch the Demo on YouTube](https://youtu.be/IPJSHLgjYgw)
 
 ## 🚀 Features
 
